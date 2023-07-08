@@ -2,7 +2,7 @@ import random
 from game import Board
 import globals as globals
 
-class Bot13521xxx(object):
+class Bot13521144(object):
     """
     Bot player
     """
@@ -10,10 +10,7 @@ class Bot13521xxx(object):
     def __init__(self):
         self.player = None
 
-        """
-            TODO: Ganti dengan NIM kalian
-        """
-        self.NIM = "13521xxx"
+        self.NIM = "13521144"
 
     def set_player_ind(self, p):
         self.player = p
