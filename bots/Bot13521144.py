@@ -14,6 +14,8 @@ class Bot13521144(object):
 
         self.number = -1
 
+        self.board_state = {}
+
         self.board_score = [
             [0, 0, 0, 0, 0, 0, 0, 0],  # 0
             [0, 0, 0, 0, 0, 0, 0, 0],  # 1
@@ -59,15 +61,32 @@ class Bot13521144(object):
         y = value % 8
         return (x, y)
     
+    def is_diagonal(self, val1, val2):
+        x1, y1 = self.value_to_coordinate(val1)
+        x2, y2 = self.value_to_coordinate(val2)
+        return abs(x1 - x2) == abs(y1 - y2)
+    
+    def is_horizontal(self, val1, val2):
+        x1, y1 = self.value_to_coordinate(val1)
+        x2, y2 = self.value_to_coordinate(val2)
+        return x1 == x2
+    
+    def is_vertical(self, val1, val2):
+        x1, y1 = self.value_to_coordinate(val1)
+        x2, y2 = self.value_to_coordinate(val2)
+        return y1 == y2
+    
     def update_board_score(self, board : Board):
-        # update all blocked cells value to -1
-        for cells in board.states:
-            print(cells)
+        # update all blocked cells value to -1 using board.states
+        # that are not contained in self.board_states
+        diff = set(board.states.keys()) - set(self.board_state.keys())
+        for i in diff:
+            self.board_score[self.value_to_coordinate(i)[0]][self.value_to_coordinate(i)[1]] = -1   
 
+        self.board_state = board.states
         # check if there's any 5 in a row that are not blocked
         # the 5 in a row can be horizontal, vertical, or diagonal
-        # if there's any, then the score of the cell is 1024
-        print(self.board_score)
+        # if there's any, then the score of the cell is 1024 
     
     def get_best_move(self):
         # max_val = -10000
@@ -80,9 +99,7 @@ class Bot13521144(object):
         #             max_x = i
         #             max_y = j
         # return max_x, max_y
-        x = random.randint(0,7)
-        y = random.randint(0,7)
-        return x, y
+        return random.randint(0, 7), random.randint(0, 7)
 
     def get_input(self, board : Board) -> str:
         """
@@ -108,13 +125,8 @@ class Bot13521144(object):
 
             TODO: Tentukan x,y secara greedy. Kembalian adalah sebuah string "x,y"
         """
-        # update_board_score(board)
-        # x, y = get_best_move(board)
-        for cells in board.states:
-            a, b = self.value_to_coordinate(cells)
-            print(a, b)
-        x = random.randint(0,7)
-        y = random.randint(0,7)
+        # self.update_board_score(board)
+        x, y = self.get_best_move()
         return f"{x},{y}"
 
 # kalau udah tengah, ambil diagonal kiri atas
