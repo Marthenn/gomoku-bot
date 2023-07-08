@@ -12,8 +12,6 @@ class Bot13521144(object):
 
         self.NIM = "13521144"
 
-        self.number = -1
-
         self.board_state = {}
 
         self.board_score = [
