@@ -264,13 +264,26 @@ class Bot13521144(object):
 
             TODO: Tentukan x,y secara greedy. Kembalian adalah sebuah string "x,y"
         """
+        # filtered state where board.state with value 1 or 2
+        filtered_state = {k: v for k, v in board.states.items() if v == 1 or v == 2}
+
+        if len(list(filtered_state.keys())) == 63:
+            for i in range(64):
+                if i not in filtered_state.keys():
+                    x, y = self.value_to_coordinate(i)
+                    return str(x) + "," + str(y)
+
+        if len(list(board.states.keys())) == 0:
+            return "3,3"
+        
+
         temp = list(board.states.keys())
         if len(temp) > 1:
             temp = None
         else:
             temp = temp[0]
-        if board.states == {} or temp == 36:
-            return "3,3" # kalau kosong, ambil tengah
+        if temp == 36:
+            return "3,3"
         if temp == 27:
             return "4,4"
         if temp == 35:
