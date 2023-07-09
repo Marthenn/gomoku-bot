@@ -22,7 +22,7 @@ def run():
             TODO: Ganti isi variabel player menjadi bot mu
         """
         player1 = Bot13521144()
-        player2 = Human()
+        player2 = Bot13521144()
 
         winner = game.start_play(player1, player2, start_player=1, is_shown=1)
         print("SELAMAT KEPADA: ", winner)
